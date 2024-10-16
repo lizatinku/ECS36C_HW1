@@ -76,8 +76,54 @@ TEST(LinkedListTest, InsertAtHead)
 }
 
 // Case 6: Insert at tail
+// This test case verifies that inserting a new value at the tail of a non-empty list
+TEST(LinkedListTest, InsertAtTail)
+{
+    LinkedList<int> llist;
+
+    // Append initial nodes to the list
+    llist.append(10);
+    llist.append(20);
+
+    // Now the list contains: 10 -> 20
+    ASSERT_EQ(llist.size(), 2);
+    ASSERT_EQ(llist.head()->value, 10);
+    ASSERT_EQ(llist.tail()->value, 20);
+
+    // Insert a new value at the tail
+    LinkedListNode<int> *newTailNode = llist.append(30);
+
+    // Verify that the new tail is correctly updated
+    ASSERT_EQ(newTailNode, llist.tail());
+    ASSERT_EQ(newTailNode->value, 30);
+    ASSERT_EQ(llist.size(), 3);
+
+    // Verify the order of the list
+    ASSERT_EQ(llist.head()->next()->next(), newTailNode);
+    ASSERT_EQ(llist.head()->next()->value, 20);
+    ASSERT_EQ(llist.head()->next()->next()->next(), nullptr);
+}
 
 // Case 7: Remove from Head
+TEST(LinkedListTest, RemoveFromHead)
+{
+    LinkedList<int> llist;
+    llist.append(10);
+    llist.append(20);
+    llist.append(30);
+
+    ASSERT_EQ(llist.size(), 3);
+
+    LinkedListNode<int> *removedNode = llist.removeFromHead();
+
+    ASSERT_EQ(removedNode->value, 10);
+    ASSERT_EQ(llist.size(), 2);
+    ASSERT_EQ(llist.head()->value, 20);
+    ASSERT_EQ(llist.tail()->value, 30);
+    ASSERT_EQ(removedNode->next(), nullptr);
+
+    delete removedNode;
+}
 
 // Case 8: Remove from Tail
 
